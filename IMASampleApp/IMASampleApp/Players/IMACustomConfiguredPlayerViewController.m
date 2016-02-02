@@ -11,6 +11,7 @@
 #import <OoyalaSDK/OOOoyalaPlayerViewController.h>
 #import <OoyalaSDK/OOOoyalaPlayer.h>
 #import <OoyalaSDK/OOPlayerDomain.h>
+#import <OoyalaSDK/OOOptions.h>
 #import <OoyalaIMASDK/OOIMAManager.h>
 
 @interface IMACustomConfiguredPlayerViewController ()
@@ -44,9 +45,13 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+   OOOptions *options = [OOOptions new];
+    options.preloadContent = YES;
+    options.showPromoImage = YES;
+ 
 
   // Create Ooyala ViewController
-  OOOoyalaPlayer *player = [[OOOoyalaPlayer alloc] initWithPcode:self.pcode domain:[[OOPlayerDomain alloc] initWithString:self.playerDomain]];
+  OOOoyalaPlayer *player = [[OOOoyalaPlayer alloc] initWithPcode:self.pcode domain:[[OOPlayerDomain alloc] initWithString:self.playerDomain] options:options];
   self.ooyalaPlayerViewController = [[OOOoyalaPlayerViewController alloc] initWithPlayer:player];
 
   [[NSNotificationCenter defaultCenter] addObserver: self
@@ -62,7 +67,7 @@
   self.adsManager = [[OOIMAManager alloc] initWithOoyalaPlayer:player];
 
   // Override the ad url to load when a video is loaded
-  [self.adsManager setAdUrlOverride:@"http://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/7521029/pb_test_mid&ciu_szs=640x480&impl=s&cmsid=949&vid=FjbGRjbzp0DV_5-NtXBVo5Rgp3Sj0R5C&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=[referrer_url]&description_url=[description_url]&correlator=[timestamp]"];
+  [self.adsManager setAdUrlOverride:@"https://pubads.g.doubleclick.net/gampad/ads?sz=400x300&iu=/53247333/testpreroll&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=[referrer_url]&description_url=[description_url]&correlator=[timestamp]"];
 
 
   // Load the video
